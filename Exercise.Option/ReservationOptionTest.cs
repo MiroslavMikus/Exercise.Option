@@ -9,7 +9,6 @@ using Xunit;
 
 namespace Exercise.Option
 {
-
     public class ReservationOptionTest
     {
         [Theory, AutoData]
@@ -25,9 +24,9 @@ namespace Exercise.Option
         }
 
         [Theory, AutoData]
-        public void RentVehicle_should_return_null_if_car_is_not_available(BusinessLogicOption sut)
+        public void RentVehicle_should_return_none_if_car_is_not_available(BusinessLogicOption sut)
         {
-            sut.RentVehicke(50, 10).HasValue.Should().BeFalse();
+            sut.RentVehicke(50, 200).HasValue.Should().BeFalse();
         }
 
         [Theory, AutoData]

@@ -7,21 +7,27 @@ namespace Exercise.Option
     {
         public Option<Reservation> RentVehicke(int userId, int vehicleId)
         {
-            var user = RepositoryOption.GetUser(userId)
-                .SomeWhen(a => !RepositoryOption.GetReservationsByUser(userId).HasValue);
+            var user = RepositoryOption.GetUser(userId);
 
-            var car = RepositoryOption.GetCar(vehicleId)
-                .SomeWhen(a => !RepositoryOption.GetReservationsByVehicle(vehicleId).HasValue);
+            var car = RepositoryOption.GetCar(vehicleId);
 
-            
+            var oldReservation = RepositoryOption.GetReservationsByUser(userId);
 
-
-            return new Reservation()
+            if (user.HasValue && car.HasValue && !oldReservation.HasValue)
             {
-                Id = 1,
-                UserId = userId,
-                VehicleId = vehicleId
-            }.Some();
+                var reservation = new Reservation()
+                {
+                    Id = 1,
+                    UserId = userId,
+                    VehicleId = vehicleId
+                };
+
+                Repository._reservations.Add(reservation);
+
+                return reservation.Some();
+            }
+
+            return Optional.Option.None<Reservation>();
         }
     }
 }
